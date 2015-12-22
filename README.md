@@ -1,1 +1,0 @@
-# fulcrum-javascript-koans
