@@ -94,25 +94,28 @@ describe("About Applying What We Have Learnt", function() {
 
     var ingredientName = 'mushrooms';
     
-    //ingredientCount[ingredientName] = products
-       var afterMap = _.map(products, function(product){
-          return product.ingredients;
-        });
-        console.log('after map:', afterMap);
-        var afterFlatten = _.flatten(afterMap);
-        console.log('after flatten:', afterFlatten);
-        var afterReduce = _.reduce(afterFlatten, function(ingredientCount, item){
-          console.log('item: ', item);
-          if (item === ingredientName) {
-            console.log('item: ',item);
-            if (!ingredientCount[ingredientName])
-                ingredientCount[ingredientName] = 1;
-            else ingredientCount[ingredientName] += 1;
-          }
-          return ingredientCount;
-        }, ingredientCount);
-        console.log('after reduce:', afterReduce);
-        ingredientCount = afterReduce;
+    // correct syntax for chain is
+    //  _.chain(products)....value();
+    //  not
+    //  _(products).chain()....value();
+    //  Above is the trial and error syntax I used
+    //  to get this koan to work correctly
+    //  perhaps an old underscore library ?
+
+       ingredientCount = _(products).chain()
+          .map(function(product){
+            return product.ingredients;
+          })
+          .flatten()
+          .reduce(function(ingredientCount, item){
+            if (item === ingredientName) {
+              if (!ingredientCount[ingredientName])
+                  ingredientCount[ingredientName] = 1;
+              else ingredientCount[ingredientName] += 1;
+            }
+            return ingredientCount;
+          }, ingredientCount)
+          .value();
 
     expect(ingredientCount['mushrooms']).toBe(2);
   });
