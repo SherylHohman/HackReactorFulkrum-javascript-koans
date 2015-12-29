@@ -94,13 +94,9 @@ describe("About Applying What We Have Learnt", function() {
 
     var ingredientName = 'mushrooms';
     
-    // correct syntax for chain is
-    //  _.chain(products)....value();
-    //  not
-    //  _(products).chain()....value();
-    //  Above is the trial and error syntax I used
-    //  to get this koan to work correctly
-    //  perhaps an old underscore library ?
+    // notice: these koans use an older underscore library, 1.1.6
+    // The newer chain syntax _.chain(collection) will cause errors.
+    // Use instead the syntax _(collection).chain()
 
        ingredientCount = _(products).chain()
           .map(function(product){
